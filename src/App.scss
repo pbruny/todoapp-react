@@ -1,0 +1,25 @@
+$yellow: #f5dd16;
+$dark-grey: #7c7c7c;
+$light-grey: #bebebe;
+$red: #ee4525;
+
+.navbar {
+  background-color: $dark-grey;
+  .navbar-brand {
+    color: $yellow !important;
+  }
+}
+
+.tasks_list{
+  margin-top: 40px;
+  .title{
+    font-size: 22px;
+    color: $dark-grey;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+ 
+  .card{
+    background-color: $dark-grey;
+  }
+}
