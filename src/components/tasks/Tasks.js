@@ -36,7 +36,7 @@ class Tasks extends Component {
                 <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
                     <p className="title">Done</p>
                     <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done == true)}/>
-                    <Button variant="danger" className="float-right remove_tasks_btn">Remove all tasks</Button>
+                    <Button variant="danger" className="float-right remove_tasks_btn mt-2 mb-2">Remove all tasks</Button>
                 </Col>
             </Row>
         );
