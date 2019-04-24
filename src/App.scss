@@ -1,25 +1,51 @@
-$yellow: #f5dd16;
-$dark-grey: #7c7c7c;
-$light-grey: #bebebe;
-$red: #ee4525;
+$yellow: #F5DD16;
+$dark-grey: #7C7C7C;
+$light-grey: #BEBEBE;
+$red: #EE4525;
 
-.navbar {
+.navbar{
   background-color: $dark-grey;
-  .navbar-brand {
+  position: fixed;
+  width: 100%;
+  z-index: 500;
+  .navbar-brand{
     color: $yellow !important;
   }
 }
 
 .tasks_list{
-  margin-top: 40px;
+  margin-top: 70px;
   .title{
     font-size: 22px;
     color: $dark-grey;
     font-weight: 600;
     margin-bottom: 4px;
   }
- 
+
+  .create_task_btn{
+    background-color: $dark-grey;
+    border-color: $dark-grey;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+
   .card{
     background-color: $dark-grey;
+    table{
+      tbody > tr:nth-child(1) > td{
+        border-top: 0;
+      }
+      color: white;
+      font-weight: 500;
+      margin-bottom: 5px;
+
+      .check{
+        color: $yellow;
+        font-size: 15px;
+      }
+      .delete{
+        color: white;
+      }
+    }
   }
 }
