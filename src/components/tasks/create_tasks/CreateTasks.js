@@ -9,7 +9,9 @@ function CreateTask(props) {
     const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
     const DEST_URL = 'todos/3/items';
 
-    const handleSubmit = (async () => {
+    const handleSubmit = (async (event) => {
+        event.preventDefault();
+
         await fetch(`${BASE_URL}/${DEST_URL}`,
             {
                 method: 'POST',
