@@ -12,6 +12,7 @@ class Tasks extends Component {
             tasks: []
         };
         this.loadTasks = this.loadTasks.bind(this);
+        this.removeAllItems = this.removeAllItems.bind(this);
     }
 
     async loadTasks() {
@@ -22,6 +23,15 @@ class Tasks extends Component {
         this.setState({ tasks: tasks });
     }
 
+    async removeAllItems() {
+        const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
+        const DEST_URL = 'todos/3/items_set';
+        if (window.confirm('Are you sure you want to delete all tasks?')) {
+            await fetch(`${BASE_URL}/${DEST_URL}`, { method: 'DELETE' });
+            this.loadTasks();
+        }
+    }
+
     componentDidMount() {
         this.loadTasks();
     }
@@ -30,13 +40,13 @@ class Tasks extends Component {
             <Row>
                 <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
                     <p className="title">To-do</p>
-                    <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done != true)}/>
-                    <CreateTask loadTasks={this.loadTasks}/>
+                    <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done != true)} />
+                    <CreateTask loadTasks={this.loadTasks} />
                 </Col>
                 <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
                     <p className="title">Done</p>
-                    <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done == true)}/>
-                    <Button variant="danger" className="float-right remove_tasks_btn mt-2 mb-2">Remove all tasks</Button>
+                    <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done == true)} />
+                    <Button onClick={this.removeAllItems} variant="danger" className="float-right remove_tasks_btn mt-2 mb-2">Remove all tasks</Button>
                 </Col>
             </Row>
         );
