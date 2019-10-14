@@ -10,31 +10,31 @@ class Tasks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: [],
+            BASE_URL: 'https://heroku-todos-api.herokuapp.com/api/v1',
+            DEST_URL: 'todos/3/items'
         };
         this.loadTasks = this.loadTasks.bind(this);
-        this.removeAllItems = this.removeAllItems.bind(this);
+        this.removeFineshedItems = this.removeFineshedItems.bind(this);
     }
-
+ 
     async loadTasks() {
-        const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
-        const DEST_URL = 'todos/3/items';
-        let response = await fetch(`${BASE_URL}/${DEST_URL}`);
+        let response = await fetch(`${this.state.BASE_URL}/${this.state.DEST_URL}`);
         const tasks = await response.json();
         this.setState({ tasks: tasks });
     }
 
-    async removeAllItems() {
-        const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
-        const DEST_URL = 'todos/3/items_set';
-
+    async removeFineshedItems(tasks) {
         Swal.fire({
             type: 'question',
             text: 'Are you sure you want to delete all tasks?',
             showCancelButton: true
         }).then(async result => {
             if(result.value){
-                await fetch(`${BASE_URL}/${DEST_URL}`, { method: 'DELETE' });
+                tasks.map(async t => {
+                    if(t.done)
+                       await fetch(`${this.state.BASE_URL}/${this.state.DEST_URL}/${t.id}`, { method: 'DELETE' });
+                });
                 this.loadTasks();
             }
         });
@@ -55,7 +55,7 @@ class Tasks extends Component {
                 <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
                     <p className="title">Done</p>
                     <List loadTasks={this.loadTasks} tasks={this.state.tasks.filter((task) => task.done == true)} />
-                    <Button onClick={this.removeAllItems} variant="danger" className="float-right remove_tasks_btn mt-2 mb-2">Remove all tasks</Button>
+                    <Button onClick={() => this.removeFineshedItems(this.state.tasks)} variant="danger" className="float-right remove_tasks_btn mt-2 mb-2">Remove fineshed tasks</Button>
                 </Col>
             </Row>
         );
