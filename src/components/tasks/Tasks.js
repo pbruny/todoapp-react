@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import List from './list/List';
 import CreateTask from './create_tasks/CreateTasks';
 import Button from 'react-bootstrap/Button';
+import Swal from 'sweetalert2';
 
 class Tasks extends Component {
     constructor(props) {
@@ -26,15 +27,23 @@ class Tasks extends Component {
     async removeAllItems() {
         const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
         const DEST_URL = 'todos/3/items_set';
-        if (window.confirm('Are you sure you want to delete all tasks?')) {
-            await fetch(`${BASE_URL}/${DEST_URL}`, { method: 'DELETE' });
-            this.loadTasks();
-        }
+
+        Swal.fire({
+            type: 'question',
+            text: 'Are you sure you want to delete all tasks?',
+            showCancelButton: true
+        }).then(async result => {
+            if(result.value){
+                await fetch(`${BASE_URL}/${DEST_URL}`, { method: 'DELETE' });
+                this.loadTasks();
+            }
+        });
     }
 
     componentDidMount() {
         this.loadTasks();
     }
+    
     render() {
         return (
             <Row>

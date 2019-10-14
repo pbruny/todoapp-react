@@ -9,9 +9,10 @@ function CreateTask(props) {
     const BASE_URL = 'https://heroku-todos-api.herokuapp.com/api/v1';
     const DEST_URL = 'todos/3/items';
 
-    const handleSubmit = (async (event) => {
-        event.preventDefault();
+    const toggle = () => setShow(!show);
 
+    //I Recomend Changing from fetch to axios, cause in the past I had some issues because of it.
+    const handleSubmit = (async (event) => {
         await fetch(`${BASE_URL}/${DEST_URL}`,
             {
                 method: 'POST',
@@ -31,24 +32,22 @@ function CreateTask(props) {
 
     return (
         <div>
-            <Button onClick={e => setShow(true)} variant="dark" className="float-right create_task_btn">+ Tasks</Button>
+            <Button onClick={toggle} variant="dark" className="float-right create_task_btn">+ Tasks</Button>
 
-            <Modal show={show || false} onHide={e => setShow(false)}>
+            <Modal show={show || false} onHide={toggle}>
                 <Modal.Header closeButton>
                     <Modal.Title>New Task</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Control type="email" placeholder="Enter with your task..." value={title || ''} onChange={e => setTitle(e.target.value)} />
+                    <Form.Control type="text" placeholder="Enter with your task..." value={title || ''} onChange={e => setTitle(e.target.value)} />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={e => setShow(false)}>
+                    <Button variant="secondary" onClick={toggle}>
                         Close
-             </Button>
-                    <form onSubmit={handleSubmit}>
-                        <Button variant="dark" type="submit">
-                            Create
-               </Button>
-                    </form>
+                    </Button>
+                    <Button variant="success" onClick={handleSubmit}>
+                        Create
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>
